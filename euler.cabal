@@ -1,0 +1,159 @@
+cabal-version: 3.0
+name:          euler
+version:       0.1.0
+
+common shared
+  default-language: GHC2021
+  hs-source-dirs:   src
+  build-depends:    base
+  ghc-options:      -O2 -Wall
+
+executable euler001
+  import:           shared
+  main-is:          001.hs
+
+executable euler002
+  import:           shared
+  main-is:          002.hs
+
+executable euler003
+  import:           shared
+  main-is:          003.hs
+
+executable euler004
+  import:           shared
+  main-is:          004.hs
+
+executable euler005
+  import:           shared
+  main-is:          005.hs
+
+executable euler006
+  import:           shared
+  main-is:          006.hs
+
+executable euler007
+  import:           shared
+  main-is:          007.hs
+
+executable euler008
+  import:           shared
+  main-is:          008.hs
+
+executable euler009
+  import:           shared
+  main-is:          009.hs
+
+executable euler010
+  import:           shared
+  main-is:          010.hs
+
+executable euler010-st
+  import:           shared
+  main-is:          010_ST.hs
+  build-depends:    base, array
+
+executable euler012
+  import:           shared
+  main-is:          012.hs
+
+executable euler014
+  import:           shared
+  main-is:          014.hs
+
+executable euler014-st
+  import:           shared
+  main-is:          014_ST.hs
+  build-depends:    base, array
+
+executable euler015
+  import:           shared
+  main-is:          015.hs
+
+executable euler019
+  import:           shared
+  main-is:          019.hs
+
+executable euler020
+  import:           shared
+  main-is:          020.hs
+
+executable euler021
+  import:           shared
+  main-is:          021.hs
+  build-depends:    base, array
+
+executable euler023
+  import:           shared
+  main-is:          023.hs
+  build-depends:    base, array, arithmoi
+
+executable euler024
+  import:           shared
+  main-is:          024.hs
+
+executable euler025
+  import:           shared
+  main-is:          025.hs
+
+executable euler026
+  import:           shared
+  main-is:          026.hs
+
+executable euler027
+  import:           shared
+  main-is:          027.hs
+
+executable euler028
+  import:           shared
+  main-is:          028.hs
+
+executable euler029
+  import:           shared
+  main-is:          029.hs
+
+executable euler030
+  import:           shared
+  main-is:          030.hs
+
+executable euler031
+  import:           shared
+  main-is:          031.hs
+
+executable euler032
+  import:           shared
+  main-is:          032.hs
+
+executable euler033
+  import:           shared
+  main-is:          033.hs
+
+executable euler034
+  import:           shared
+  main-is:          034.hs
+  build-depends:    base, array, containers
+
+executable euler035
+  import:           shared
+  main-is:          035.hs
+  build-depends:    base, array
+
+executable euler036
+  import:           shared
+  main-is:          036.hs
+
+executable euler037
+  import:           shared
+  main-is:          037.hs
+
+executable euler038
+  import:           shared
+  main-is:          038.hs
+
+executable euler039
+  import:           shared
+  main-is:          039.hs
+
+executable euler040
+  import:           shared
+  main-is:          040.hs
