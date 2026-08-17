@@ -157,3 +157,24 @@ executable euler039
 executable euler040
   import:           shared
   main-is:          040.hs
+
+executable euler041
+  import:           shared
+  main-is:          041.hs
+
+executable euler043
+  import:           shared
+  main-is:          043.hs
+
+executable euler044
+  import:           shared
+  main-is:          044.hs
+
+executable euler045
+  import:           shared
+  main-is:          045.hs
+
+executable euler046
+  import:           shared
+  main-is:          046.hs
+  build-depends:    base, arithmoi
