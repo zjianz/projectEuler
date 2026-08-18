@@ -30,7 +30,7 @@ rPrimes = [2,3,5,7] : map (\x -> concatMap gen x) rPrimes
                            isPrime (10*x+n)]
 
 result :: Integer
-result = sum $ take 11 $ filter isLPrime (concat (drop 1 rPrimes))
+result = sum . take 11 . filter isLPrime . concat . tail $ rPrimes
 
 ------------------------------------------------------------
 
