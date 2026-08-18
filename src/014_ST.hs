@@ -49,7 +49,7 @@ solver n = runST $ do
             when (length lchain + base - 1 > maxLen) $
                 writeSTRef maxRef (length lchain + base - 1, i)
 
-    fst <$> readSTRef maxRef
+    snd <$> readSTRef maxRef
 
 result :: Int
 result = solver 1000000

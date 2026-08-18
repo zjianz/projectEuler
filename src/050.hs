@@ -13,24 +13,24 @@ time x = do
 -- Solution
 ------------------------------------------------------------
 
-isLPrime :: Integer -> Bool
-isLPrime 3 = True
-isLPrime 7 = True
-isLPrime n
-    | n < 10 = False
-    | otherwise = isLPrime (drophead n) && isPrime n
-    where 
-        drophead :: Integer -> Integer
-        drophead k = read (tail $ show k)
+limit :: Integer
+limit = 1000000
 
-rPrimes :: [[Integer]]
-rPrimes = [2,3,5,7] : map (\x -> concatMap gen x) rPrimes
-    where
-        gen x = [ 10*x+n | n <- [1,3,7,9],
-                           isPrime (10*x+n)]
+walker n acc (p1:p2:ps)
+    | acc > limit = []
+    | isPrime acc = (walker (n+2) (acc+p1+p2) ps) ++ [n]
+    | otherwise   = walker (n+2) (acc+p1+p2) ps
+
+findbest best group (p:restPrime)
+    | acc > limit = best
+    | otherwise   = case walker 0 acc restPrime of
+        []    -> best
+        (n:_) -> let newbest = group ++ [p] ++ take n restPrime in
+                     findbest newbest (tail newbest) (drop n restPrime)
+    where acc = sum group + p
 
 result :: Integer
-result = sum $ take 11 $ filter isLPrime (concat (drop 1 rPrimes))
+result = sum $ findbest [] [] primes
 
 ------------------------------------------------------------
 

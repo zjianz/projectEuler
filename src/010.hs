@@ -1,4 +1,5 @@
 import System.CPUTime (getCPUTime)
+import Euler (primes)
 
 time :: Show a => a -> IO ()
 time x = do
@@ -13,10 +14,7 @@ time x = do
 ------------------------------------------------------------
 
 result :: Int
-result = foldl' (+) 0 (takeWhile (<2000000) primes)
-    where 
-        primes = 2 : (filter isPrime [3,5..])
-        isPrime n = all (\p -> n `mod` p /= 0) (takeWhile (\p -> p * p <= n) primes)
+result = fromInteger $ foldl' (+) 0 (takeWhile (<2000000) primes)
 
 ------------------------------------------------------------
 

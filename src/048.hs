@@ -1,5 +1,4 @@
 import System.CPUTime (getCPUTime)
-import Data.List (nub)
 
 time :: Show a => a -> IO ()
 time x = do
@@ -13,17 +12,11 @@ time x = do
 -- Solution
 ------------------------------------------------------------
 
-condProd :: Int -> Int -> Int
-condProd a b
-    | length digits /= 9 = 0
-    | all (`elem` digits) ['1'..'9'] = p
-    | otherwise  = 0
-    where
-        p      = a * b
-        digits = concatMap show [a,b,p] 
+b :: Integer
+b = 10000000000
 
-result :: Int
-result = sum $ nub $ filter (/=0) $ [condProd a b | a <- [10..99], b <- [100..999]] ++ [condProd a b | a <- [1..9], b <- [1000..9999]]
+result :: Integer
+result = foldl' (+) 0 [k^k `mod` b | k <- [1..1000]] `mod` b
 
 ------------------------------------------------------------
 

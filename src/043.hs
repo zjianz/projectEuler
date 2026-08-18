@@ -12,13 +12,15 @@ time x = do
 -- Solution
 ------------------------------------------------------------
 
-toDigit n = [n `div` 100, (n `div` 10) `mod` 10, n `mod` 10]
-
+fromDigit :: [Int] -> Int
 fromDigit ps = sum (zipWith (*) (reverse ps) [10^k | k <- [0..]])
 
+seed :: [[Int]]
 seed = [toDigit x | x <- [17,34..1000], let [a,b,c] = toDigit x, a /= b, a /= c, b /= c]
+    where toDigit n = [n `div` 100, (n `div` 10) `mod` 10, n `mod` 10]
 
-getChild node prime = [ x:node | x <- [0..9], not (x `elem` node), (fromDigit (x:(take 2 node))) `mod` prime == 0]
+getChild :: [Int] -> Int -> [[Int]]
+getChild node factor = [ x:node | x <- [0..9], not (x `elem` node), (fromDigit (x:(take 2 node))) `mod` factor == 0]
 
 result :: Int
 result = sum $ map fromDigit $ filter ((/=0) . head) $ foldl' (\ys -> \x -> concatMap (flip getChild x) ys) seed [13,11,7,5,3,2,1]

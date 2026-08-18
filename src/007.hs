@@ -1,4 +1,5 @@
 import System.CPUTime (getCPUTime)
+import Euler (primes)
 
 time :: Show a => a -> IO ()
 time x = do
@@ -11,18 +12,6 @@ time x = do
 ------------------------------------------------------------
 -- Solution
 ------------------------------------------------------------
-
-primes :: [Integer]
-primes = 2 : filter isPrime [3,5..]
-    where isPrime n = 
-            all (\p -> n `mod` p /= 0)
-                (takeWhile (\p -> p * p <= n) primes)
-
--- Eratosthenes sieve not performing well
--- primes = sieve [2..]
---     where sieve (p:ps) =
---             p : sieve [x | x <- ps, x `mod` p /= 0]
-
 
 result :: Integer
 result = primes !! 10000

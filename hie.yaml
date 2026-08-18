@@ -1,0 +1,7 @@
+cradle:
+  direct:
+    arguments:
+      - "-isrc"
+      - "-package=arithmoi"
+      - "-package=array"
+      - "-package=containers"

@@ -1,4 +1,5 @@
 import System.CPUTime (getCPUTime)
+import Euler (primes, isPrime)
 import Data.List (unfoldr)
 
 time :: Show a => a -> IO ()
@@ -12,15 +13,6 @@ time x = do
 ------------------------------------------------------------
 -- Solution
 ------------------------------------------------------------
-
-primes :: [Integer]
-primes = 2 : sieve [3,5..]
-    where sieve (p:ps) = p : sieve (filter (\x -> p * p > x || x `mod` p /= 0) ps)
-
-isPrime :: Integer -> Bool
-isPrime n 
-    | n > 1 = and [n `mod` p /= 0 | p <- takeWhile (\x -> x*x <= n) primes]
-    | otherwise = False
 
 -- Permutation from inc to dec
 

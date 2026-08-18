@@ -12,15 +12,15 @@ time x = do
 -- Solution
 ------------------------------------------------------------
 
-largestFactor :: Int -> Int
+largestFactor :: Integer -> Integer
 largestFactor n = go 2
     where go q
-            | q * q > n = q
+            | q * q > n = n
             | n `mod` q == 0 = largestFactor (n `div` q)
             | otherwise = go (q + 1)
 
 
-result :: Int
+result :: Integer
 result = largestFactor 600851475143
 
 ------------------------------------------------------------

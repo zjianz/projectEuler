@@ -13,24 +13,23 @@ time x = do
 -- Solution
 ------------------------------------------------------------
 
-isLPrime :: Integer -> Bool
-isLPrime 3 = True
-isLPrime 7 = True
-isLPrime n
-    | n < 10 = False
-    | otherwise = isLPrime (drophead n) && isPrime n
-    where 
-        drophead :: Integer -> Integer
-        drophead k = read (tail $ show k)
+prime4 = dropWhile (<1000) $ takeWhile (<10000) primes
 
-rPrimes :: [[Integer]]
-rPrimes = [2,3,5,7] : map (\x -> concatMap gen x) rPrimes
+equiv [] qs = null qs
+equiv (p:ps) qs = case rest of
+    [] -> False
+    (q:rrest) -> equiv ps (pre++rrest)
     where
-        gen x = [ 10*x+n | n <- [1,3,7,9],
-                           isPrime (10*x+n)]
+        (pre,rest) = span (/=p) qs
+
+candidates = go prime4
+    where
+        go [] = []
+        go (p:ps) = scan p ps ++ go ps
+        scan p ps = [ [p,q,r] | q <- ps, equiv (show p) (show q),let r = 2*q-p, equiv (show p) (show r), isPrime r]
 
 result :: Integer
-result = sum $ take 11 $ filter isLPrime (concat (drop 1 rPrimes))
+result = read $ head $ filter (/="148748178147") $ map (concatMap show) candidates
 
 ------------------------------------------------------------
 

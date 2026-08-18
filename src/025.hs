@@ -13,7 +13,7 @@ time x = do
 ------------------------------------------------------------
 
 limit :: Integer
-limit = 10^(1000 :: Int)
+limit = 10^(999 :: Int)
 
 result :: Int
 result = go 2 1 1

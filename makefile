@@ -2,13 +2,15 @@
 # 通用 Haskell 编译配置
 # ============================================================
 GHC       = ghc
-GHC_FLAGS = -O2 -Wall -package=arithmoi -package=array -package=containers -odir=tmp -hidir=tmp
+GHC_FLAGS = -O2 -Wall -i$(SRC_DIR) -package=arithmoi -package=array -package=containers -odir=tmp -hidir=tmp
 SRC_DIR   = src
 BUILD_DIR = build
 OBJ_DIR   = tmp
 
 # 自动发现所有 .hs 源文件（位于 $(SRC_DIR) 下）
 SOURCES := $(wildcard $(SRC_DIR)/*.hs)
+# 排除 Euler.hs
+SOURCES := $(filter-out$(SRC_DIR)/Euler.hs, $(SOURCES))
 # 对应的目标可执行文件（放在 $(BUILD_DIR) 下，去掉扩展名）
 TARGETS  := $(patsubst $(SRC_DIR)/%.hs,$(BUILD_DIR)/%,$(SOURCES))
 
@@ -66,10 +68,5 @@ init:
 		echo "错误: src/$(N).hs 已存在"; \
 		exit 1; \
 	fi; \
-	if grep -q "^executable euler$(N)$$" euler.cabal; then \
-		echo "错误: euler.cabal 中已注册 executable euler$(N)"; \
-		exit 1; \
-	fi; \
 	cp "$(SRC_DIR)/template" "$(SRC_DIR)/$(N).hs" && \
-	printf '\nexecutable euler%s\n  import:           shared\n  main-is:          %s.hs\n' "$(N)" "$(N)" >> euler.cabal && \
-	echo "已创建 src/$(N).hs，并注册 executable euler$(N) 到 euler.cabal"
+	echo "已创建 src/$(N).hs"

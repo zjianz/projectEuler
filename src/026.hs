@@ -80,7 +80,7 @@ rankOptimized k
 
 -- 主程序：寻找 1..limit 中使循环节长度最大的 k
 limit :: Int
-limit = 10000
+limit = 1000
 
 result :: Int
 result = snd $ foldl' cmp (0,0) $ 
