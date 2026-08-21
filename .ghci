@@ -1,0 +1,4 @@
+:set -isrc
+:set -package=arithmoi
+:set -package=array
+:set -package=containers

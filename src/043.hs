@@ -23,7 +23,7 @@ getChild :: [Int] -> Int -> [[Int]]
 getChild node factor = [ x:node | x <- [0..9], not (x `elem` node), (fromDigit (x:(take 2 node))) `mod` factor == 0]
 
 result :: Int
-result = sum $ map fromDigit $ filter ((/=0) . head) $ foldl' (\ys -> \x -> concatMap (flip getChild x) ys) seed [13,11,7,5,3,2,1]
+result = sum $ map fromDigit $ filter ((/=0) . head) $ foldl' (flip (concatMap . flip getChild)) seed [13,11,7,5,3,2,1]
 
 ------------------------------------------------------------
 
