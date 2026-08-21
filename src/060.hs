@@ -1,5 +1,6 @@
 import System.CPUTime (getCPUTime)
-import Euler (isPrime, primes)
+import Euler (primes)
+import Math.NumberTheory.Primes.Testing (isPrime)
 
 time :: Show a => a -> IO ()
 time x = do
@@ -17,13 +18,29 @@ upperbound :: Integer
 upperbound = 30000
 
 oprimes :: [Integer]
-oprimes = 3 : drop 3 primes
+oprimes = 3 : (takeWhile (<upperbound) $ dropWhile (<=5) $ primes)
+
+digitShift :: Integer -> Integer
+digitShift n
+    | n < 10       = 10
+    | n < 100      = 100
+    | n < 1000     = 1000
+    | n < 10000    = 10000
+    | n < 100000   = 100000
+    | n < 1000000  = 1000000
+    | n < 10000000 = 10000000
+    | otherwise    = 100000000
+
+
+concatNum :: Integer -> Integer -> Integer
+concatNum p q = p * digitShift q + q
 
 befriend :: Integer -> Integer -> Bool
-befriend p q = (p+q) `mod` 3 /= 0 && (isPrime . read $ show p ++ show q) && (isPrime . read $ show q ++ show p)
+befriend p q = (p+q) `mod` 3 /= 0 && isPrime pq && isPrime qp
+    where
+        pq = concatNum p q
+        qp = concatNum q p
 
-befriendWith :: Foldable t => Integer -> t Integer -> Bool
-befriendWith p = all (befriend p)
 
 dfs :: [Integer]
     -> Int
@@ -31,13 +48,12 @@ dfs :: [Integer]
     -> [Integer]
     -> (Integer, [Integer])
     -> (Integer, [Integer])
-dfs _ _ _ [] (best, bestNode) = (best, bestNode)
+dfs node 0 total _ _            = (total, node)
+dfs _ _ _ [] (best, bestNode)   = (best, bestNode)
 dfs node rest total cand@(c:cs) (best, bestNode)
-    | total + sum rcand >= best = (best, bestNode)
-    | rest == 0                 = (total, node)
     | length rcand < rest       = (best, bestNode)
-    | not (befriendWith c node) = dfs node rest total cs (best, bestNode)
-    | otherwise                 = dfs node rest total cs (dfs (c:node) (rest-1) (total+c) cs (best, bestNode))
+    | total + sum rcand >= best = (best, bestNode)
+    | otherwise                 = dfs node rest total cs (dfs (c:node) (rest-1) (total+c) (filter (befriend c) cs) (best, bestNode))
     where
         rcand = take rest cand
 
