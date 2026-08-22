@@ -1,4 +1,5 @@
 import System.CPUTime (getCPUTime)
+import Euler
 
 time :: Show a => a -> IO ()
 time x = do
@@ -12,11 +13,11 @@ time x = do
 -- Solution
 ------------------------------------------------------------
 
-eSeq = concatMap (\x -> [1,2*x,1]) [33,32..1] ++ [2]
+eSeq :: [Integer]
+eSeq = 2 : concatMap (\x -> [1,2*x,1]) [1..]
 
-continuedrev (p,q) s = (q + p*s, p)
-
-result = digisum . fst $ foldl' continuedrev (1,0) eSeq
+result :: Integer
+result = digisum . fst . fromContinuedFraction . take 100 $ eSeq
     where
         digisum n 
             | n < 10    = n
