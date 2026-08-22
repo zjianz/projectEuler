@@ -17,8 +17,8 @@ reachMap :: (Int -> Int) -> IntMap [Int]
 reachMap f = fromList (go [] 0 [] 1)
     where
         go ret i mem n
-            | fn >= 100*(i+1) = go ((i,mem):ret) (i+1) [] n
             | i > 99          = ret
+            | fn >= 100*(i+1) = go ((i,mem):ret) (i+1) [] n
             | pos < 10        = go ret i mem (n+1)
             | otherwise       = go ret i (pos:mem) (n+1)
             where 
@@ -44,7 +44,7 @@ check (p:ps) = p `orElse` check ps
 
 orElse :: Maybe a -> Maybe a -> Maybe a
 orElse Nothing that = that
-orElse this _       = this
+orElse this    _    = this
 
 dfs :: Int -> [IntMap [Int]] -> Maybe [Int]
 dfs begin reaches = go begin reaches []

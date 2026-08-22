@@ -2,3 +2,4 @@
 :set -package=arithmoi
 :set -package=array
 :set -package=containers
+:set -package=hashtables
