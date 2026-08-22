@@ -2,7 +2,7 @@
 # 通用 Haskell 编译配置
 # ============================================================
 GHC       = ghc
-GHC_FLAGS = -O2 -Wall -i$(SRC_DIR) -package=arithmoi -package=array -package=containers -odir=tmp -hidir=tmp
+GHC_FLAGS = -O2 -Wall -i$(SRC_DIR) -package=arithmoi -package=array -package=containers -package=hashtables -odir=tmp -hidir=tmp
 SRC_DIR   = src
 BUILD_DIR = build
 OBJ_DIR   = tmp
@@ -70,3 +70,4 @@ init:
 	fi; \
 	cp "$(SRC_DIR)/template" "$(SRC_DIR)/$(N).hs" && \
 	echo "已创建 src/$(N).hs"
+	code src/$(N).hs

@@ -5,3 +5,4 @@ cradle:
       - "-package=arithmoi"
       - "-package=array"
       - "-package=containers"
+      - "-package=hashtables"
