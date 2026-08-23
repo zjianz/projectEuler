@@ -1,4 +1,9 @@
-module Euler (primes, isPrime, isqrt, continuedFractionOfSqrt, fromContinuedFraction) where
+module Euler (
+    primes, isPrime, 
+    digitsRevBase, digitsRev,
+    fromDigitsRevBase, fromDigitsRev, 
+    isqrt, 
+    continuedFractionOfSqrt, fromContinuedFraction) where
 import Data.Foldable (Foldable(foldr'))
 
 primes :: [Integer]
@@ -12,6 +17,18 @@ isPrime n
     | n > 1 = and [n `mod` p /= 0 | p <- takeWhile (\x -> x*x <= n) primes]
     | otherwise = False
 
+
+digitsRevBase :: Integral t => t -> t -> [t]
+digitsRevBase b n = (n `mod` b) : digitsRevBase b (n `div` b)
+
+digitsRev :: Integer -> [Integer]
+digitsRev = digitsRevBase 10
+
+fromDigitsRevBase :: Num a => a -> [a] -> a
+fromDigitsRevBase base seq = foldl' (+) 0 $ zipWith (\x y -> x*(base^y)) seq [0..]
+
+fromDigitsRev :: [Integer] -> Integer
+fromDigitsRev = fromDigitsRevBase 10
 
 isqrt :: Integer -> Integer
 isqrt n
