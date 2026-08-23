@@ -21,6 +21,7 @@ fingerPrint :: Integer -> Integer
 fingerPrint 0 = 0
 fingerPrint n = security^(n`mod`10) + fingerPrint (n`div`10)
 
+result :: Integer
 result = runST $ do
     memory <- H.new :: ST s (H.HashTable s Integer (Integer,Int))
     go memory 1
@@ -28,7 +29,6 @@ result = runST $ do
         insert :: Integer -> Maybe (Integer,Int) -> (Maybe (Integer,Int), (Integer,Int))
         insert val Nothing   = (Just (val,1),(val,1))
         insert _ (Just (v,n)) = (Just (v,n+1) , (v,n+1))
-        -- go :: (H.HashTable s Integer (Integer,Int)) -> Integer -> Integer
         go m x = do
             let val = (x^3)
             let fp = fingerPrint val
