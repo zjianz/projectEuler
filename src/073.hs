@@ -53,7 +53,7 @@ f n memo = case M.lookup n memo of
             (1-x, M.insert n (1-x) memo')
 
 result :: Int
-result = M.size . snd $ blockSum f fraction fractions 1200000 memo
+result = fst $ blockSum f fraction fractions 12000 memo
     where
         memo = M.fromList []
         fraction  k = (k-1) `div` 2 - k `div` 3

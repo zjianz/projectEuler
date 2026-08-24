@@ -1,11 +1,5 @@
 import System.CPUTime (getCPUTime)
-import Control.Monad ( when, foldM, forM_ )
-import Data.Array.ST
-    ( newListArray, readArray, writeArray, runSTUArray )
-import Data.Array.Unboxed ( (!), UArray )
-import Control.Monad.ST (runST)
-import GHC.ST (ST(ST))
-import Data.Array.Base (STUArray(STUArray))
+import Data.IntMap.Strict as M
 
 time :: Show a => a -> IO ()
 time x = do
@@ -19,20 +13,43 @@ time x = do
 -- Solution
 ------------------------------------------------------------
 
-phiSieve :: Int -> Int
-phiSieve n = runST $ do
-    a <- newListArray (0, n) [0..n] :: ST s (STUArray s Int Int)
-    foldM (\s p -> do
-        x <- readArray a p
-        when (x == p) $ do
-            forM_ [p,2*p..n] $ \q -> do
-                x' <- readArray a q
-                writeArray a q (x' - x' `div` p)
-        nx <- readArray a p
-        return (s + nx)) 0 [2..n]
+-- Same as 73
+
+blockSum :: (Int -> s -> (Int, s)) -> (Int->Int) -> (Int->Int) -> Int -> s -> (Int, s)
+blockSum f g gs n s = go1 s 2 0
+    where
+        go1 s1 d acc
+            | k' == k   = go2 s1 k acc
+            | otherwise = go1 s1' (d+1) (acc + fk * g d)
+            where
+                k  = n `div` d
+                k' = n `div` (d+1)
+                (fk, s1') = f k s1
+        go2 s2 k acc
+            | k == 0    = (acc, s2)
+            | otherwise = go2 s2' (k-1) (acc + fk * (gs d - gs d'))
+            where
+                d  = n `div` k
+                d' = n `div` (k+1)
+                (fk, s2') = f k s2
+
+type Memo = M.IntMap Int
+
+f :: Int -> Memo -> (Int, Memo)
+f 1 memo = (1, memo)
+f n memo = case M.lookup n memo of
+    Just x -> (x, memo)
+    Nothing -> let
+        (x, memo') = blockSum f (const 1) id n memo
+        in
+            (1-x, M.insert n (1-x) memo')
 
 result :: Int
-result = phiSieve (10^6)
+result = fst $ blockSum f fraction fractions 1000000 memo
+    where
+        memo = M.fromList []
+        fraction  k = (k-1)
+        fractions k = (k-1) * k `div` 2
 
 ------------------------------------------------------------
 
