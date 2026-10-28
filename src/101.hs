@@ -19,7 +19,7 @@ predict [n] = n
 predict ps@(p:_) = p + predict (zipWith (-) ps (drop 1 ps))  
 
 polygen :: [Integer]
-polygen = [sum $ zipWith (*) (concat $ repeat [1,-1]) (map (x^) [0..10]) | x <- [1..10]]
+polygen = [sum $ zipWith (*) (cycle [1,-1]) (map (x^) [0..10]) | x <- [1..10]]
 
 result :: Integer
 result = sum . map predict . tails . reverse $ polygen
